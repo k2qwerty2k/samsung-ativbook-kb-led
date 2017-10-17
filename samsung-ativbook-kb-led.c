@@ -79,34 +79,19 @@ static int ativbook_kb_led_probe ( struct platform_device * pdev )
 	acpi_handle handle;
 	acpi_status status;
 
-	struct acpi_buffer resource_buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-	union acpi_object *original_aml;
-
 	status = acpi_get_handle ( NULL, ATIVBOOK_ACPI_REGION_NAME, &handle );
 
 	if ( ACPI_FAILURE ( status ) ) {
 		return -ENODEV;
 	}
 
-	status = acpi_get_possible_resources(handle, &resource_buffer);
-	if ( ACPI_FAILURE(status))
-	{
-		pr_err("acpi_get_possible_resources fail!\n");
-	}
-	else
-	{
-		original_aml = resource_buffer.pointer;
-		pr_err("type = %02X\n", original_aml->type);
-		kfree(resource_buffer.pointer);
-	}
-
+	// I don't know how get address and length region from handle, use predefine parameters
 
 	status = acpi_get_handle ( NULL, ATIVBOOK_ACPI_FN_UPDATE, &acpi_fn_update );
 
 	if ( ACPI_FAILURE ( status ) ) {
 		return -ENODEV;
 	}
-
 
 	/*
 	status = acpi_get_handle ( NULL, ATIVBOOK_ACPI_FN_AUTO, &acpi_fn_auto );
